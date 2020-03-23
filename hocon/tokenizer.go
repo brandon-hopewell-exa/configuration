@@ -305,7 +305,7 @@ func (p *HoconTokenizer) IsWhitespaceOrComment() bool {
 func (p *HoconTokenizer) PullTripleQuotedText() *Token {
 	buf := bytes.NewBuffer(nil)
 	p.Take(3)
-	for !p.EOF() && !p.Matches("\"\"\"") {
+	for !p.EOF() && (!p.Matches("\"\"\"") || p.Matches("\"\"\"\"")) {
 		if err := buf.WriteByte(p.Peek()); err != nil {
 			panic(err)
 		}
